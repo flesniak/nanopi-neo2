@@ -1,0 +1,37 @@
+From de98fc77502d3190d0fb4e4f956c09f4baffd04f Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 17:39:22 +0100
+Subject: [PATCH 04/14] add ths compatible and iio-hwmon to sun50i-h5
+
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+index d9a720bff05d..ab53a3a40602 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+@@ -76,6 +76,11 @@
+ 		};
+ 	};
+ 
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&ths>;
++	};
++
+ 	psci {
+ 		compatible = "arm,psci-0.2";
+ 		method = "smc";
+@@ -125,3 +130,8 @@
+ 		     <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+ 	compatible = "allwinner,sun50i-h5-pinctrl";
+ };
++
++&ths {
++	compatible = "allwinner,sun8i-h3-ths";
++	#thermal-sensor-cells = <0>;
++};
+-- 
+2.16.1
+

@@ -1,0 +1,24 @@
+From 1361e4938aad1fe411832348881ce6206965b060 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 23:12:53 +0100
+Subject: [PATCH 14/14] make blue led heartbeat by default
+
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo2.dts | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo2.dts b/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo2.dts
+index 6eb8092d8e57..4c4096c1e5c8 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo2.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi-neo2.dts
+@@ -70,6 +70,7 @@
+ 		status {
+ 			label = "nanopi:blue:status";
+ 			gpios = <&pio 0 10 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "heartbeat";
+ 		};
+ 	};
+ 
+-- 
+2.16.1
+

@@ -1,0 +1,74 @@
+From 140ea1720a229f856a0913022a3af1c09593a3d6 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 21:05:07 +0100
+Subject: [PATCH 12/14] fix operation point indentation
+
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi | 36 ++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+index 19229241c3f0..5f210a13fc6c 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+@@ -67,39 +67,39 @@
+ 		};
+ 
+ 		opp@912000000 {
+-		       opp-hz = /bits/ 64 <912000000>;
+-		       opp-microvolt = <1120000 1120000 1300000>;
+-		       clock-latency-ns = <244144>; /* 8 32k periods */
++			opp-hz = /bits/ 64 <912000000>;
++			opp-microvolt = <1120000 1120000 1300000>;
++			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+ 		opp@960000000 {
+-		       opp-hz = /bits/ 64 <960000000>;
+-		       opp-microvolt = <1160000 1160000 1300000>;
+-		       clock-latency-ns = <244144>; /* 8 32k periods */
++			opp-hz = /bits/ 64 <960000000>;
++			opp-microvolt = <1160000 1160000 1300000>;
++			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+ 		opp@1008000000 {
+-		       opp-hz = /bits/ 64 <1008000000>;
+-		       opp-microvolt = <1200000 1200000 1300000>;
+-		       clock-latency-ns = <244144>; /* 8 32k periods */
++			opp-hz = /bits/ 64 <1008000000>;
++			opp-microvolt = <1200000 1200000 1300000>;
++			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+ 		opp@1056000000 {
+-		       opp-hz = /bits/ 64 <1056000000>;
+-		       opp-microvolt = <1240000 1240000 1300000>;
+-		       clock-latency-ns = <244144>; /* 8 32k periods */
++			opp-hz = /bits/ 64 <1056000000>;
++			opp-microvolt = <1240000 1240000 1300000>;
++			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+ 		opp@1104000000 {
+-		       opp-hz = /bits/ 64 <1104000000>;
+-		       opp-microvolt = <1260000 1260000 1300000>;
+-		       clock-latency-ns = <244144>; /* 8 32k periods */
++			opp-hz = /bits/ 64 <1104000000>;
++			opp-microvolt = <1260000 1260000 1300000>;
++			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+ 		opp@1152000000 {
+-		       opp-hz = /bits/ 64 <1152000000>;
+-		       opp-microvolt = <1300000 1300000 1300000>;
+-		       clock-latency-ns = <244144>; /* 8 32k periods */
++			opp-hz = /bits/ 64 <1152000000>;
++			opp-microvolt = <1300000 1300000 1300000>;
++			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 	};
+ 
+-- 
+2.16.1
+
