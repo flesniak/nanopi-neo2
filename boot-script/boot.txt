@@ -1,0 +1,17 @@
+# Recompile with:
+# mkimage -C none -A arm -T script -d boot.txt boot.scr
+
+setenv kernel_addr_decomp 0x4A000000
+load mmc ${devnum}:${distro_bootpart} ${kernel_addr_decomp} ${prefix}Image.gz
+unzip ${kernel_addr_decomp} ${kernel_addr_r}
+load mmc ${devnum}:${distro_bootpart} ${fdt_addr_r} ${prefix}sun50i-h5-nanopi-neo2.dtb
+fdt addr ${fdt_addr}
+
+# setup MAC address
+#fdt set ethernet0 local-mac-address ${mac_node}
+
+# setup boot_device
+#fdt set mmc${boot_mmc} boot_device <1>
+
+setenv bootargs console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rootfstype=ext4 rw rootwait verbose
+booti ${kernel_addr_r} - ${fdt_addr_r}

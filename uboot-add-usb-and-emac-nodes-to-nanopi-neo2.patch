@@ -1,0 +1,44 @@
+From c66c37f91beef194b331aa6dc9fce67969a4ea58 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 15:47:13 +0100
+Subject: [PATCH] add usb and emac nodes to nanopi neo2
+
+---
+ arch/arm/dts/sun50i-h5-nanopi-neo2.dts | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/arch/arm/dts/sun50i-h5-nanopi-neo2.dts b/arch/arm/dts/sun50i-h5-nanopi-neo2.dts
+index c08af7881b..93b3af7b4a 100644
+--- a/arch/arm/dts/sun50i-h5-nanopi-neo2.dts
++++ b/arch/arm/dts/sun50i-h5-nanopi-neo2.dts
+@@ -84,3 +84,27 @@
+ 	pinctrl-0 = <&uart0_pins_a>;
+ 	status = "okay";
+ };
++
++&usbphy {
++	status = "okay";
++};
++
++&ohci1 {
++	status = "okay";
++};
++
++&ehci1 {
++	status = "okay";
++};
++
++&emac {
++	pinctrl-names = "default";
++	pinctrl-0 = <&emac_rgmii_pins>;
++	phy-mode = "rgmii";
++	phy = <&phy1>;
++	status = "okay";
++
++	phy1: ethernet-phy@7 {
++		reg = <7>;
++	};
++};
+-- 
+2.16.1
+
