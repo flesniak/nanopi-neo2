@@ -1,0 +1,26 @@
+From 1cd183349b2ccda0b1b3b4e01480e6c0e148e30e Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sun, 18 Feb 2018 18:51:58 +0100
+Subject: [PATCH 12/12] try systemd as init service
+
+---
+ init/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/init/main.c b/init/main.c
+index 5e13c544bbf4..caf81b899f48 100644
+--- a/init/main.c
++++ b/init/main.c
+@@ -1091,7 +1091,8 @@ static int __ref kernel_init(void *unused)
+ 		panic("Requested init %s failed (error %d).",
+ 		      execute_command, ret);
+ 	}
+-	if (!try_to_run_init_process("/sbin/init") ||
++	if (!try_to_run_init_process("/usr/lib/systemd/systemd") ||
++	    !try_to_run_init_process("/sbin/init") ||
+ 	    !try_to_run_init_process("/etc/init") ||
+ 	    !try_to_run_init_process("/bin/init") ||
+ 	    !try_to_run_init_process("/bin/sh"))
+-- 
+2.18.0
+

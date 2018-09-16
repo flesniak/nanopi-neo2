@@ -1,0 +1,105 @@
+From f7db68db7fe0da906933a61afead8fc5df6de100 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 17:40:57 +0100
+Subject: [PATCH 05/12] add thermal-zones to sun50i-h5
+
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi | 75 ++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+index 25a00f632a30..14be8ebc9245 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+@@ -41,6 +41,7 @@
+  */
+ 
+ #include <arm/sunxi-h3-h5.dtsi>
++#include <dt-bindings/thermal/thermal.h>
+ 
+ / {
+ 	cpus {
+@@ -86,6 +87,80 @@
+ 		method = "smc";
+ 	};
+ 
++	thermal-zones {
++		cpu-thermal {
++			/* milliseconds */
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++			thermal-sensors = <&ths>;
++
++			trips {
++				cpu_warm: cpu_warm {
++					temperature = <65000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_hot_pre: cpu_hot_pre {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_hot: cpu_hot {
++					temperature = <75000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_very_hot_pre: cpu_very_hot_pre {
++					temperature = <85000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_very_hot: cpu_very_hot {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_crit: cpu_crit {
++					temperature = <105000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
++
++			cooling-maps {
++				cpu_warm_limit_cpu {
++					trip = <&cpu_warm>;
++					cooling-device = <&cpu0 THERMAL_NO_LIMIT 2>;
++				};
++
++				cpu_hot_pre_limit_cpu {
++					trip = <&cpu_hot_pre>;
++					cooling-device = <&cpu0 2 3>;
++				};
++
++				cpu_hot_limit_cpu {
++					trip = <&cpu_hot>;
++					cooling-device = <&cpu0 3 4>;
++				};
++
++				cpu_very_hot_pre_limit_cpu {
++					trip = <&cpu_very_hot>;
++					cooling-device = <&cpu0 5 6>;
++				};
++
++				cpu_very_hot_limit_cpu {
++					trip = <&cpu_very_hot>;
++					cooling-device = <&cpu0 7 THERMAL_NO_LIMIT>;
++				};
++			};
++		};
++	};
++
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13
+-- 
+2.18.0
+

@@ -1,0 +1,143 @@
+From 7ffa8fa4d0c189db4029515d9d9d90cb638d9d0a Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 23:11:28 +0100
+Subject: [PATCH 10/12] fix operating points, remove dummy regulator
+
+as this kernel is for nanopi neo2, we don't need the regulator and drop
+states the hardware can not achieve.
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi | 61 +++++++-------------
+ 1 file changed, 22 insertions(+), 39 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+index 3971317bb947..be4ca49d7d5e 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+@@ -48,57 +48,48 @@
+ 		compatible = "operating-points-v2";
+ 		opp-shared;
+ 
+-		opp@408000000 {
+-			opp-hz = /bits/ 64 <408000000>;
+-			opp-microvolt = <1000000 1000000 1300000>;
++		opp@120000000 {
++			opp-hz = /bits/ 64 <120000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@648000000 {
+-			opp-hz = /bits/ 64 <648000000>;
+-			opp-microvolt = <1040000 1040000 1300000>;
++		opp@240000000 {
++			opp-hz = /bits/ 64 <240000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@816000000 {
+-			opp-hz = /bits/ 64 <816000000>;
+-			opp-microvolt = <1080000 1080000 1300000>;
++		opp@312000000 {
++			opp-hz = /bits/ 64 <312000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@912000000 {
+-			opp-hz = /bits/ 64 <912000000>;
+-			opp-microvolt = <1120000 1120000 1300000>;
++		opp@480000000 {
++			opp-hz = /bits/ 64 <480000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@960000000 {
+-			opp-hz = /bits/ 64 <960000000>;
+-			opp-microvolt = <1160000 1160000 1300000>;
++		opp@624000000 {
++			opp-hz = /bits/ 64 <624000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@1008000000 {
+-			opp-hz = /bits/ 64 <1008000000>;
+-			opp-microvolt = <1200000 1200000 1300000>;
++		opp@816000000 {
++			opp-hz = /bits/ 64 <816000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@1056000000 {
+-			opp-hz = /bits/ 64 <1056000000>;
+-			opp-microvolt = <1240000 1240000 1300000>;
++		opp@960000000 {
++			opp-hz = /bits/ 64 <960000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@1104000000 {
+-			opp-hz = /bits/ 64 <1104000000>;
+-			opp-microvolt = <1260000 1260000 1300000>;
++		opp@1008000000 {
++			opp-hz = /bits/ 64 <1008000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 
+-		opp@1152000000 {
+-			opp-hz = /bits/ 64 <1152000000>;
+-			opp-microvolt = <1300000 1300000 1300000>;
++		opp@1056000000 {
++			opp-hz = /bits/ 64 <1056000000>;
+ 			clock-latency-ns = <244144>; /* 8 32k periods */
+ 		};
+ 	};
+@@ -116,7 +107,6 @@
+ 			clock-latency = <244144>; /* 8 32k periods */
+ 			enable-method = "psci";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&reg_cpu_fallback>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -203,22 +193,22 @@
+ 			cooling-maps {
+ 				cpu_warm_limit_cpu {
+ 					trip = <&cpu_warm>;
+-					cooling-device = <&cpu0 THERMAL_NO_LIMIT 2>;
++					cooling-device = <&cpu0 THERMAL_NO_LIMIT 7>;
+ 				};
+ 
+ 				cpu_hot_pre_limit_cpu {
+ 					trip = <&cpu_hot_pre>;
+-					cooling-device = <&cpu0 2 3>;
++					cooling-device = <&cpu0 2 7>;
+ 				};
+ 
+ 				cpu_hot_limit_cpu {
+ 					trip = <&cpu_hot>;
+-					cooling-device = <&cpu0 3 4>;
++					cooling-device = <&cpu0 3 7>;
+ 				};
+ 
+ 				cpu_very_hot_pre_limit_cpu {
+ 					trip = <&cpu_very_hot>;
+-					cooling-device = <&cpu0 5 6>;
++					cooling-device = <&cpu0 5 THERMAL_NO_LIMIT>;
+ 				};
+ 
+ 				cpu_very_hot_limit_cpu {
+@@ -229,13 +219,6 @@
+ 		};
+ 	};
+ 
+-	reg_cpu_fallback: reg_cpu_fallback  {
+-		compatible = "regulator-fixed";
+-		regulator-name = "vdd-cpux-dummy";
+-		regulator-min-microvolt = <1100000>;
+-		regulator-max-microvolt = <1100000>;
+-	};
+-
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13
+-- 
+2.18.0
+

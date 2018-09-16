@@ -1,0 +1,25 @@
+From b73d1edd1e74ad50cdfe78fd0af90ec7e7a99964 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 16:03:25 +0100
+Subject: [PATCH 02/12] add symbolic name instead of number to r_ccu
+
+---
+ arch/arm/boot/dts/sunxi-h3-h5.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/sunxi-h3-h5.dtsi b/arch/arm/boot/dts/sunxi-h3-h5.dtsi
+index 52f7eca71bbf..1a2e974fb006 100644
+--- a/arch/arm/boot/dts/sunxi-h3-h5.dtsi
++++ b/arch/arm/boot/dts/sunxi-h3-h5.dtsi
+@@ -810,7 +810,7 @@
+ 			compatible = "allwinner,sun8i-h3-r-ccu";
+ 			reg = <0x01f01400 0x100>;
+ 			clocks = <&osc24M>, <&osc32k>, <&iosc>,
+-				 <&ccu 9>;
++				 <&ccu CLK_PLL_PERIPH0>;
+ 			clock-names = "hosc", "losc", "iosc", "pll-periph";
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+-- 
+2.18.0
+

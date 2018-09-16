@@ -1,0 +1,68 @@
+From 8f312f549be2db0b8995dac971b92fba281253f6 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 17:44:42 +0100
+Subject: [PATCH 07/12] sun50i-h5: reference opp table from cpu
+
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+index affb5c283dce..25cf35ab74cf 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h5.dtsi
+@@ -111,7 +111,13 @@
+ 			compatible = "arm,cortex-a53", "arm,armv8";
+ 			device_type = "cpu";
+ 			reg = <0>;
++			clocks = <&ccu CLK_CPUX>;
++			clock-names = "cpu";
++			clock-latency = <244144>; /* 8 32k periods */
+ 			enable-method = "psci";
++			operating-points-v2 = <&cpu_opp_table>;
++			cpu-supply = <&reg_cpu_fallback>;
++			#cooling-cells = <2>;
+ 		};
+ 
+ 		cpu@1 {
+@@ -119,6 +125,7 @@
+ 			device_type = "cpu";
+ 			reg = <1>;
+ 			enable-method = "psci";
++			operating-points-v2 = <&cpu_opp_table>;
+ 		};
+ 
+ 		cpu@2 {
+@@ -126,6 +133,7 @@
+ 			device_type = "cpu";
+ 			reg = <2>;
+ 			enable-method = "psci";
++			operating-points-v2 = <&cpu_opp_table>;
+ 		};
+ 
+ 		cpu@3 {
+@@ -133,6 +141,7 @@
+ 			device_type = "cpu";
+ 			reg = <3>;
+ 			enable-method = "psci";
++			operating-points-v2 = <&cpu_opp_table>;
+ 		};
+ 	};
+ 
+@@ -220,6 +229,13 @@
+ 		};
+ 	};
+ 
++	reg_cpu_fallback: reg_cpu_fallback  {
++		compatible = "regulator-fixed";
++		regulator-name = "vdd-cpux-dummy";
++		regulator-min-microvolt = <1100000>;
++		regulator-max-microvolt = <1100000>;
++	};
++
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13
+-- 
+2.18.0
+

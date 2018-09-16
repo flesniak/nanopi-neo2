@@ -1,0 +1,29 @@
+From 632f497228bea3c9de5471c451519ee370ef1fb0 Mon Sep 17 00:00:00 2001
+From: Fabian Lesniak <fabian@lesniak-it.de>
+Date: Sat, 17 Feb 2018 17:57:15 +0100
+Subject: [PATCH 08/12] enhance workaroud bogus THS raw value 0 readout
+
+2a82fee8b9045468b64ff0fce7c508c389c5432f was only valid for no_irq
+readouts, this adds the zero-check to the support_irq branch as well
+---
+ drivers/iio/adc/sun4i-gpadc-iio.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/iio/adc/sun4i-gpadc-iio.c b/drivers/iio/adc/sun4i-gpadc-iio.c
+index 39a02b1bf0fd..ebe41a969a12 100644
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -410,6 +410,10 @@ static int sun4i_gpadc_temp_read(struct iio_dev *indio_dev, int *val,
+ 
+ 	if (info->data->support_irq) {
+ 		regmap_read(info->regmap, info->data->temp_data[sensor], val);
++
++		if (!*val)
++			return -EINVAL;
++
+ 		return 0;
+ 	}
+ 
+-- 
+2.18.0
+
