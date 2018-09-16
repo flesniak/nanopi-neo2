@@ -13,5 +13,5 @@ fdt addr ${fdt_addr}
 # setup boot_device
 #fdt set mmc${boot_mmc} boot_device <1>
 
-setenv bootargs init=/usr/lib/systemd/systemd console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rootfstype=ext4 rw rootwait verbose
+setenv bootargs console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rootfstype=ext4 rw rootwait verbose
 booti ${kernel_addr_r} - ${fdt_addr_r}
